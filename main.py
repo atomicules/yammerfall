@@ -78,6 +78,10 @@ class MainHandler(RequestHandler):
 				template_values = {
 					'messagesUrl': '/messages?%s%s' % (self.get_cookie(),'&topic_id='+self.request.get("topic_id")),
 				}
+			elif self.request.get("group_id"):
+				template_values = {
+					'messagesUrl': '/messages?%s%s' % (self.get_cookie(),'&group_id='+self.request.get("group_id")),
+				}
 			else:
 				template_values = {
 					'messagesUrl': '/messages?%s' % self.get_cookie(),
@@ -140,6 +144,8 @@ class MessagesHandler(RequestHandler):
 			token_secret = self.request.get('oauth_token_secret'))
 		if self.request.get("topic_id"):
 			MSGS_URL = '%smessages/about_topic/%s%s' % (DEFAULT_API_PREFIX, self.request.get("topic_id"), DEFAULT_API_SUFFIX)
+		elif self.request.get("group_id"):
+			MSGS_URL = '%smessages/in_group/%s%s' % (DEFAULT_API_PREFIX, self.request.get("group_id"), DEFAULT_API_SUFFIX)
 		else:
 			MSGS_URL = '%smessages%s' % (DEFAULT_API_PREFIX, DEFAULT_API_SUFFIX)
 
